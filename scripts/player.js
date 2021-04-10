@@ -16,41 +16,39 @@ function player(x, y) {
     var dh = 0;
     var hMax = false;
     var speed = 2;
+    var delay = 0;
     
     this.update = function () {
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
         if (this.isWalking ) {
+            delay = 60;
+
             if (hMax) {
-                dh -= 0.2;
+                dh -= 0.5;
                 if (dh <= 0) {
                     hMax = false;
                 }
             } else {
-                dh += 0.2;
-                if  (dh >= 5) {
+                dh += 0.5;
+                if  (dh >= 10) {
                     hMax = true;
                 }
             }
         } else {
-            if (this.velocity.x > 0) {
-                this.velocity.x -= 0.2;
-            } else if (this.velocity.y > 0) {
-                this.velocity.y -= 0.2;
-            } else if (this.velocity.x < 0) {
-                this.velocity.x += 0.2;
-            } else if (this.velocity.y < 0) {
-                this.velocity.y += 0.2;
-            }
+            if (delay > 0) {
+                this.velocity.x *= 0.9;
+                this.velocity.y *= 0.9;
 
-            if (Math.abs(this.velocity.x) < 0.2 || Math.abs(this.velocity.y) < 0.2) {
+                delay--;
+            } else {
                 this.velocity.x = 0;
                 this.velocity.y = 0;
             }
 
             if (dh > 0)  {
-                dh -= 0.2;
+                dh -= 0.5;
             } else {
                 dh = 0;
             }
