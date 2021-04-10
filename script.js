@@ -8,19 +8,20 @@ window.onload = function() {
     canvas = document.getElementById("canvas");
     context = canvas.getContext("2d");
 
-    myPlayer = new player(canvas.width / 2 - 10, canvas.height / 2 - 20);
+    myPlayer = new player(0, 0);
+    myPlayer.setDirection("down");
     window.addEventListener("keydown", function (e) {
         myPlayer.isWalking = true;
 
         if (e.key == "w") {
-            myPlayer.updateDirection("up");
+            myPlayer.setDirection("up");
         } else if (e.key == "s"){
-            myPlayer.updateDirection("down");
+            myPlayer.setDirection("down");
         }
         if (e.key == "d") {
-            myPlayer.updateDirection("right");
+            myPlayer.setDirection("right");
         } else if (e.key == "a") {
-            myPlayer.updateDirection("right");
+            myPlayer.setDirection("left");
         }
     });
     window.addEventListener("keyup", function (e) {

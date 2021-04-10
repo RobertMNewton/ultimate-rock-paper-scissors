@@ -12,10 +12,10 @@ function player(x, y) {
         height: 40
     };
     this.isWalking = false;
-    this.updateDirection("down");
     
     var dh = 0;
     var hMax = false;
+    var speed = 2;
     
     this.update = function () {
         this.position.x += this.velocity.x;
@@ -33,37 +33,42 @@ function player(x, y) {
                     hMax = true;
                 }
             }
-
-            context.fillStyle = "white";
-            context.fillRect(this.positon.x, this.position.y + dh, this.dimensions.width, this.dimensions.height - dh);
         } else {
             if (this.velocity.x > 0) {
-                this.velocity.x -= 0.5;
+                this.velocity.x -= 0.2;
             } else if (this.velocity.y > 0) {
-                this.velocity.y -= 0.5;
+                this.velocity.y -= 0.2;
             } else if (this.velocity.x < 0) {
-                this.velocity.x += 0.5;
+                this.velocity.x += 0.2;
             } else if (this.velocity.y < 0) {
-                this.velocity.y += 0.5;
+                this.velocity.y += 0.2;
             }
 
-            if (dh >= 0) {
+            if (Math.abs(this.velocity.x) < 0.2 || Math.abs(this.velocity.y) < 0.2) {
+                this.velocity.x = 0;
+                this.velocity.y = 0;
+            }
+
+            if (dh > 0)  {
                 dh -= 0.2;
+            } else {
+                dh = 0;
             }
-
-            context.fillStyle = "white";
-            context.fillRect(his.positon.x, this.position.y + dh, this.dimensions.width, this.dimensions.height - dh)
         }
+
+        context.fillStyle = "white";
+        context.fillRect(this.position.x, this.position.y + dh, this.dimensions.width, this.dimensions.height - dh)
+
     }
 
-    this.updateDirection = function (direction){
+    this.setDirection = function(direction) {
         switch (direction) {
             case "down":
                this.dimensions.width = 20;
                this.dimensions.height = 40;
 
                 this.velocity.x = 0;
-                this.velocity.y = -5;
+                this.velocity.y = speed;
 
                 break;
             case "up":
@@ -71,14 +76,14 @@ function player(x, y) {
                 this.dimensions.height = 40;
 
                 this.velocity.x = 0;
-                this.velocity.y = -5;
+                this.velocity.y = -speed;
 
                 break;
             case "left":
                 this.dimensions.width = 15;
                 this.dimensions.height = 40;
 
-                this. velocity.x = -5
+                this. velocity.x = -speed;
                 this.velocity.y = 0;
 
                 break;
@@ -86,7 +91,7 @@ function player(x, y) {
                 this.dimensions.width = 15;
                 this.dimensions.height = 40;
 
-                this.velocity.x = 5;
+                this.velocity.x = speed;
                 this.velocity.y = 0;
 
                 break;
