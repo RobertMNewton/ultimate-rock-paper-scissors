@@ -3,6 +3,7 @@ window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequest
 var canvas;
 var context;
 var myPlayer;
+var myNPC;
 
 window.onload = function() {
     canvas = document.getElementById("canvas");
@@ -28,16 +29,19 @@ window.onload = function() {
         myPlayer.isWalking = false;
     });
 
+    myNPC = new nonPlayerCharacter(340, 220, 20, 40, "skyblue");
+
     window.requestAnimationFrame(update);
 }
 
 function update() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    context.fillStyle = "black";
+    context.fillStyle = "green";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     myPlayer.update();
+    myNPC.update();
 
     window.requestAnimationFrame(update);
 }

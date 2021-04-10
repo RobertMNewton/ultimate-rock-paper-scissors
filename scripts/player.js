@@ -19,6 +19,16 @@ function player(x, y) {
     var delay = 0;
     
     this.update = function () {
+        if (this.position.x < 0) {
+            this.position.x = canvas.width - this.dimensions.width;
+        } else if (this.position.x > canvas.width) {
+            this.position.x = 0;
+        } else if (this.position.y < -this.dimensions.height) {
+            this.position.y = canvas.height - this.dimensions.height;
+        } else if (this.position.y > canvas.height) {
+            this.position.y = 0;
+        } 
+
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
@@ -55,7 +65,7 @@ function player(x, y) {
         }
 
         context.fillStyle = "white";
-        context.fillRect(this.position.x, this.position.y + dh, this.dimensions.width, this.dimensions.height - dh)
+        context.fillRect(this.position.x, this.position.y + dh, this.dimensions.width, this.dimensions.height - dh);
 
     }
 
