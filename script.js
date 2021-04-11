@@ -4,6 +4,7 @@ var canvas;
 var context;
 var myPlayer;
 var myNPC;
+var environment;
 
 window.onload = function() {
     canvas = document.getElementById("canvas");
@@ -31,6 +32,8 @@ window.onload = function() {
 
     myNPC = new nonPlayerCharacter(340, 220, 20, 40, "skyblue");
 
+    environment = [myNPC];
+
     window.requestAnimationFrame(update);
 }
 
@@ -40,8 +43,12 @@ function update() {
     context.fillStyle = "green";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    myPlayer.update();
-    myNPC.update();
+    var i;
+    for (i = 0; i < environment.length; i++) {
+        environment[i].update();
+    }
 
+    myPlayer.update();
+    
     window.requestAnimationFrame(update);
 }

@@ -12,6 +12,8 @@ function player(x, y) {
         height: 40
     };
     this.isWalking = false;
+    this.collision = {};
+    this.direction = "down";
     
     var dh = 0;
     var hMax = false;
@@ -78,6 +80,8 @@ function player(x, y) {
                 this.velocity.x = 0;
                 this.velocity.y = speed;
 
+                this.direction = "down";
+
                 break;
             case "up":
                 this.dimensions.width = 20;
@@ -85,6 +89,8 @@ function player(x, y) {
 
                 this.velocity.x = 0;
                 this.velocity.y = -speed;
+
+                this.direction = "up";
 
                 break;
             case "left":
@@ -94,13 +100,21 @@ function player(x, y) {
                 this. velocity.x = -speed;
                 this.velocity.y = 0;
 
+                this.direction = "left"
+
                 break;
             case "right":
                 this.dimensions.width = 15;
                 this.dimensions.height = 40;
 
+                if (this.direction != "right") {
+                    this.position.x += 5;
+                }
+
                 this.velocity.x = speed;
                 this.velocity.y = 0;
+
+                this.direction = "right";
 
                 break;
         }
