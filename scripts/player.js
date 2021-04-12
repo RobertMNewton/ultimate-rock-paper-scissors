@@ -11,6 +11,12 @@ function player(x, y) {
         width: 20,
         height: 40
     };
+    this.collisionBox = {
+        x1: this.position.x,
+        x2: this.position.x + this.dimensions.width,
+        y1: this.position.y + this.dimensions.height - 10,
+        y2: this.position.y + this.dimensions.width
+    };
     this.isWalking = false;
     this.collision = {};
     this.direction = "down";
@@ -29,6 +35,13 @@ function player(x, y) {
             }
         }
 
+        this.collisionBox = {
+            x1: this.position.x,
+            x2: this.position.x + this.dimensions.width,
+            y1: this.position.y + this.dimensions.height - 10,
+            y2: this.position.y + this.dimensions.width
+        };
+
         if (this.position.x < 0) {
             this.position.x = canvas.width - this.dimensions.width;
         } else if (this.position.x > canvas.width) {
@@ -41,6 +54,18 @@ function player(x, y) {
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
+
+        if(this.talkingTo) {
+            if (this.talkingTo.collision()) {
+                this.position.x -= this.velocity.x;
+                this.position.y -= this.velocity.y;
+
+                this.velocity.x = 0;
+                this.velocity.y = 0;
+
+                this.isWalking = false;
+            }
+        }
 
         if (this.isWalking ) {
             delay = 60;
