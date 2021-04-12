@@ -14,7 +14,7 @@ function nonPlayerCharacter(x, y, width, height, colour) {
         y2: this.position.y + this.dimensions.width
     };
     this.colour = colour;
-    this.speech = ["Hello, Duncan.", "My name is Papi Sonia.", "And I know where you live (;"];
+    this.speech = ["..."];
 
     var hMax = false;
     var dh = 0;
@@ -50,5 +50,9 @@ function nonPlayerCharacter(x, y, width, height, colour) {
         }
 
         return false;
+    }
+
+    this.setSpeech = function(text) {
+        this.speech = text;
     }
 }
