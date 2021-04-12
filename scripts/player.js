@@ -18,7 +18,6 @@ function player(x, y) {
         y2: this.position.y + this.dimensions.width
     };
     this.isWalking = false;
-    this.collision = {};
     this.direction = "down";
 
     this.talkingTo = null;
@@ -55,15 +54,12 @@ function player(x, y) {
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
+        // collision detection *BUGGY*
+        
         if(this.talkingTo) {
             if (this.talkingTo.collision()) {
                 this.position.x -= this.velocity.x;
                 this.position.y -= this.velocity.y;
-
-                this.velocity.x = 0;
-                this.velocity.y = 0;
-
-                this.isWalking = false;
             }
         }
 
@@ -106,50 +102,50 @@ function player(x, y) {
 
     this.setDirection = function(direction) {
         switch (direction) {
-            case "down":
-               this.dimensions.width = 20;
-               this.dimensions.height = 40;
+        case "down":
+        this.dimensions.width = 20;
+        this.dimensions.height = 40;
 
-                this.velocity.x = 0;
-                this.velocity.y = speed;
+            this.velocity.x = 0;
+            this.velocity.y = speed;
 
-                this.direction = "down";
+            this.direction = "down";
 
-                break;
-            case "up":
-                this.dimensions.width = 20;
-                this.dimensions.height = 40;
+            break;
+        case "up":
+            this.dimensions.width = 20;
+            this.dimensions.height = 40;
 
-                this.velocity.x = 0;
-                this.velocity.y = -speed;
+            this.velocity.x = 0;
+            this.velocity.y = -speed;
 
-                this.direction = "up";
+            this.direction = "up";
 
-                break;
-            case "left":
-                this.dimensions.width = 15;
-                this.dimensions.height = 40;
+            break;
+        case "left":
+            this.dimensions.width = 15;
+            this.dimensions.height = 40;
 
-                this. velocity.x = -speed;
-                this.velocity.y = 0;
+            this. velocity.x = -speed;
+            this.velocity.y = 0;
 
-                this.direction = "left"
+            this.direction = "left"
 
-                break;
-            case "right":
-                this.dimensions.width = 15;
-                this.dimensions.height = 40;
+            break;
+        case "right":
+            this.dimensions.width = 15;
+            this.dimensions.height = 40;
 
-                if (this.direction != "right") {
-                    this.position.x += 5;
-                }
+            if (this.direction != "right") {
+                this.position.x += 5;
+            }
 
-                this.velocity.x = speed;
-                this.velocity.y = 0;
+            this.velocity.x = speed;
+            this.velocity.y = 0;
 
-                this.direction = "right";
+            this.direction = "right";
 
-                break;
+            break;
         }
     }
 }
