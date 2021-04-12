@@ -4,7 +4,8 @@ var canvas;
 var context;
 var myPlayer;
 var myNPC;
-var environment;
+var background;
+var coordinate;
 var text;
 
 
@@ -37,15 +38,14 @@ window.onload = function() {
         } else if (e.key == "a") {
             myPlayer.setDirection("left");
         }
-
     });
+    
     window.addEventListener("keyup", function (e) {
         myPlayer.isWalking = false;
     });
 
-    myNPC = new nonPlayerCharacter(340, 220, 20, 40, "skyblue");
-
-    environment = [myNPC];
+    coordinate = 0;
+    background = map[coordinate];
 
     window.requestAnimationFrame(update);
 }
@@ -69,27 +69,24 @@ function update() {
     } else {
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        context.fillStyle = "green";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
-        var environment2 = [];
+        var background2 = [];
         var i;
-        for (i = 0; i < environment.length; i++) {
-            if (environment[i].position.y > myPlayer.position.y) {
-                environment2.push(environment[i]);
+        for (i = 0; i < background.length; i++) {
+            if (background[i].position.y > myPlayer.position.y) {
+                background2.push(background[i]);
             } else {
-                environment[i].update();
+                background[i].update();
             }
 
-            if (distanceToPlayer(environment[i]) < 50) {
-                myPlayer.talkingTo = environment[i];
+            if (distanceToPlayer(background[i]) < 50) {
+                myPlayer.talkingTo = background[i];
             }
         }
 
         myPlayer.update();
 
-        for (i = 0; i < environment2.length; i++) {
-            environment2[i].update();
+        for (i = 0; i < background2.length; i++) {
+            background2[i].update();
         }
     }
 

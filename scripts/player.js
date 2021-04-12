@@ -43,8 +43,14 @@ function player(x, y) {
 
         if (this.position.x < 0) {
             this.position.x = canvas.width - this.dimensions.width;
+
+            coordinate--;
+            background = map[coordinate];     
         } else if (this.position.x > canvas.width) {
             this.position.x = 0;
+
+            coordinate++;
+            background = map[coordinate];
         } else if (this.position.y < -this.dimensions.height) {
             this.position.y = canvas.height - this.dimensions.height;
         } else if (this.position.y > canvas.height) {
