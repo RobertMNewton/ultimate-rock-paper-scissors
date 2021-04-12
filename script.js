@@ -52,8 +52,6 @@ window.onload = function() {
 
 function update() {
     if (text) {
-        console.log("Speaking update function called.")
-
         context.fillStyle = "black";
         context.fillRect(0, 380, 680, 100);
 
@@ -63,9 +61,12 @@ function update() {
         context.fillStyle = "black";
         context.font = "12px serif";
         context.fillText(text[0], 21, 401);
-    } else {
-        console.log("Main update function called.")
 
+        context.fillStyle = "green";
+        context.fillRect(myPlayer.talkingTo.position.x, myPlayer.talkingTo.position.y, myPlayer.talkingTo.dimensions.width, myPlayer.talkingTo.dimensions.height);
+
+        myPlayer.talkingTo.speakAnimation();
+    } else {
         context.clearRect(0, 0, canvas.width, canvas.height);
 
         context.fillStyle = "green";
