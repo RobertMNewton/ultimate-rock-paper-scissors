@@ -72,9 +72,14 @@ function update() {
         context.fillStyle = "green";
         context.fillRect(0, 0, canvas.width, canvas.height);
 
+        var environment2 = [];
         var i;
         for (i = 0; i < environment.length; i++) {
-            environment[i].update();
+            if (environment[i].position.y > myPlayer.position.y) {
+                environment2.push(environment[i]);
+            } else {
+                environment[i].update();
+            }
 
             if (distanceToPlayer(environment[i]) < 50) {
                 myPlayer.talkingTo = environment[i];
@@ -82,6 +87,10 @@ function update() {
         }
 
         myPlayer.update();
+
+        for (i = 0; i < environment2.length; i++) {
+            environment2[i].update();
+        }
     }
 
     window.requestAnimationFrame(update);

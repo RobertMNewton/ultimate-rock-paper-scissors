@@ -53,8 +53,6 @@ function player(x, y) {
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
-
-        // collision detection *BUGGY*
         
         if(this.talkingTo) {
             if (this.talkingTo.collision()) {
