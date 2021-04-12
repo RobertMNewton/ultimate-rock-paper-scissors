@@ -53,8 +53,14 @@ function player(x, y) {
             background = map[coordinate];
         } else if (this.position.y < -this.dimensions.height) {
             this.position.y = canvas.height - this.dimensions.height;
+
+            coordinate += 5;
+            background = map[coordinate];
         } else if (this.position.y > canvas.height) {
             this.position.y = 0;
+
+            coordinate -= 5;
+            background = map[coordinate];
         } 
 
         this.position.x += this.velocity.x;
