@@ -14,6 +14,8 @@ function player(x, y) {
     this.isWalking = false;
     this.collision = {};
     this.direction = "down";
+
+    this.talkingTo = null;
     
     var dh = 0;
     var hMax = false;
@@ -21,6 +23,12 @@ function player(x, y) {
     var delay = 0;
     
     this.update = function () {
+        if (this.talkingTo != null) {
+            if (distanceToPlayer(this.talkingTo) >= 50) {
+                this.talkingTo = null;
+            }
+        }
+
         if (this.position.x < 0) {
             this.position.x = canvas.width - this.dimensions.width;
         } else if (this.position.x > canvas.width) {

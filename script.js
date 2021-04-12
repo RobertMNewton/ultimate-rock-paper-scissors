@@ -5,6 +5,8 @@ var context;
 var myPlayer;
 var myNPC;
 var environment;
+var text;
+
 
 window.onload = function() {
     canvas = document.getElementById("canvas");
@@ -12,19 +14,30 @@ window.onload = function() {
 
     myPlayer = new player(0, 0);
     myPlayer.setDirection("down");
+    
     window.addEventListener("keydown", function (e) {
         myPlayer.isWalking = true;
 
-        if (e.key == "w") {
+        if (e.key == "e") {
+            if (!text) {
+                text = [].concat(myPlayer.talkingTo.speech);
+            } else {
+                text.shift();
+
+                if (text.length == 0) {
+                    text = undefined;
+                }
+            }
+        } else if (e.key == "w") {
             myPlayer.setDirection("up");
         } else if (e.key == "s"){
             myPlayer.setDirection("down");
-        }
-        if (e.key == "d") {
+        } else if (e.key == "d") {
             myPlayer.setDirection("right");
         } else if (e.key == "a") {
             myPlayer.setDirection("left");
         }
+
     });
     window.addEventListener("keyup", function (e) {
         myPlayer.isWalking = false;
@@ -38,17 +51,41 @@ window.onload = function() {
 }
 
 function update() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    if (text) {
+        console.log("Speaking update function called.")
 
-    context.fillStyle = "green";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "black";
+        context.fillRect(0, 380, 680, 100);
 
-    var i;
-    for (i = 0; i < environment.length; i++) {
-        environment[i].update();
+        context.fillStyle = "white";
+        context.fillRect(10, 390, 620, 80);
+
+        context.fillStyle = "black";
+        context.font = "12px serif";
+        context.fillText(text[0], 21, 401);
+    } else {
+        console.log("Main update function called.")
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        context.fillStyle = "green";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        var i;
+        for (i = 0; i < environment.length; i++) {
+            environment[i].update();
+
+            if (distanceToPlayer(environment[i]) < 50) {
+                myPlayer.talkingTo = environment[i];
+            }
+        }
+
+        myPlayer.update();
     }
 
-    myPlayer.update();
-    
     window.requestAnimationFrame(update);
+}
+
+function distanceToPlayer(object) {
+    return Math.hypot(object.position.x - myPlayer.position.x, object.position.y - myPlayer.position.y);
 }

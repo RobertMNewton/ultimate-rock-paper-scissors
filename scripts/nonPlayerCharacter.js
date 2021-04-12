@@ -8,6 +8,7 @@ function nonPlayerCharacter(x, y, width, height, colour) {
         height: height
     };
     this.colour = colour;
+    this.speech = ["Hello, Duncan.", "My name is Papi Sonia.", "And I know where you live (;"];
 
     this.update = function() {
         context.fillStyle = colour;
