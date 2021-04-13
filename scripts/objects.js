@@ -4,10 +4,20 @@ function background(colour) {
         x: 0,
         y: 0
     };
+    this.dimensions = {
+        width: canvas.width,
+        height: canvas.height
+    };
+    this.collisionBox = {
+        x1: 0,
+        x2: 0,
+        y1: 0,
+        y2: 0
+    };
 
     this.update = function() {
         context.fillStyle = colour;
-        context.fillRect(this.position.x, this.position.y, canvas.width, canvas.height);
+        context.fillRect(this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
     }
 
     this.collision = function() {
@@ -27,8 +37,8 @@ function rock(x, y, width, height, colour)  {
     this.collisionBox = {
         x1: this.position.x,
         x2: this.position.x + this.dimensions.width,
-        y1: this.position.y + this.dimensions.height - 10,
-        y2: this.position.y + this.dimensions.width
+        y1: this.position.y,
+        y2: this.position.y + this.dimensions.height
     };
     this.speech = ["A rock ..."];
     this.colour = colour;
@@ -48,6 +58,17 @@ function rock(x, y, width, height, colour)  {
 
         return false;
     }
+}
+function bush(x, y, width, height) {
+    this.position = {
+        x: x,
+        y: y
+    };
+    this.dimensions = {
+        width: width,
+        height: height
+    };
+    this.speech = ["A bush..."]
 }
 
 function createRock(x, y, width, height, colour) {

@@ -11,7 +11,7 @@ function nonPlayerCharacter(x, y, width, height, colour) {
         x1: this.position.x,
         x2: this.position.x + this.dimensions.width,
         y1: this.position.y + this.dimensions.height - 10,
-        y2: this.position.y + this.dimensions.width
+        y2: this.position.y + this.dimensions.height
     };
     this.colour = colour;
     this.speech = ["..."];
@@ -45,7 +45,7 @@ function nonPlayerCharacter(x, y, width, height, colour) {
         var xAverage = (this.collisionBox.x1 + this.collisionBox.x2 + myPlayer.collisionBox.x1 + myPlayer.collisionBox.x2) / 4;
         var yAverage = (this.collisionBox.y1 + this.collisionBox.y2 + myPlayer.collisionBox.y1 + myPlayer.collisionBox.y2) / 4;
 
-        if (xAverage <= this.collisionBox.x2 && xAverage >= this.collisionBox.x1 && yAverage >= this.collisionBox.y2 && yAverage <= this.collisionBox.y1) {
+        if (xAverage < this.collisionBox.x2 && xAverage > this.collisionBox.x1 && yAverage > this.collisionBox.y1 && yAverage < this.collisionBox.y2) {
             return true;
         }
 

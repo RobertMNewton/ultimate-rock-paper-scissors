@@ -15,7 +15,7 @@ function player(x, y) {
         x1: this.position.x,
         x2: this.position.x + this.dimensions.width,
         y1: this.position.y + this.dimensions.height - 10,
-        y2: this.position.y + this.dimensions.width
+        y2: this.position.y + this.dimensions.height
     };
     this.isWalking = false;
     this.direction = "down";
@@ -33,13 +33,6 @@ function player(x, y) {
                 this.talkingTo = null;
             }
         }
-
-        this.collisionBox = {
-            x1: this.position.x,
-            x2: this.position.x + this.dimensions.width,
-            y1: this.position.y + this.dimensions.height - 10,
-            y2: this.position.y + this.dimensions.width
-        };
 
         if (this.position.x < 0) {
             this.position.x = canvas.width - this.dimensions.width;
@@ -65,11 +58,21 @@ function player(x, y) {
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
+
+        this.collisionBox = {
+            x1: this.position.x,
+            x2: this.position.x + this.dimensions.width,
+            y1: this.position.y + this.dimensions.height - 10,
+            y2: this.position.y + this.dimensions.height
+        };
         
         if(this.talkingTo) {
             if (this.talkingTo.collision()) {
                 this.position.x -= this.velocity.x;
                 this.position.y -= this.velocity.y;
+
+                this.velocity.x = 0;
+                this.velocity.y = 0;
             }
         }
 

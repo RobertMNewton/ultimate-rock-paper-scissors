@@ -44,6 +44,10 @@ window.onload = function() {
         myPlayer.isWalking = false;
     });
 
+    window.addEventListener("click", function(e) {
+        console.log("x: " + e.clientX + ", y: " + e.clientY);
+    });
+
     coordinate = 0;
     background = map[coordinate];
 
@@ -61,18 +65,21 @@ function update() {
         context.fillStyle = "black";
         context.font = "12px serif";
         context.fillText(text[0], 21, 401);
+        
+        if ("speakAnimation" in myPlayer.talkingTo) {
+            context.fillStyle = "green";
+            context.fillRect(myPlayer.talkingTo.position.x, myPlayer.talkingTo.position.y, myPlayer.talkingTo.dimensions.width, myPlayer.talkingTo.dimensions.height);
 
-        context.fillStyle = "green";
-        context.fillRect(myPlayer.talkingTo.position.x, myPlayer.talkingTo.position.y, myPlayer.talkingTo.dimensions.width, myPlayer.talkingTo.dimensions.height);
+            myPlayer.talkingTo.speakAnimation();
+        } 
 
-        myPlayer.talkingTo.speakAnimation();
     } else {
         context.clearRect(0, 0, canvas.width, canvas.height);
 
         var background2 = [];
         var i;
         for (i = 0; i < background.length; i++) {
-            if (background[i].position.y > myPlayer.position.y) {
+            if (background[i].collisionBox.y2 > myPlayer.collisionBox.y2) {
                 background2.push(background[i]);
             } else {
                 background[i].update();

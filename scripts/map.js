@@ -1,13 +1,13 @@
-const greenBackground = new background("green");
-const orangeBackground = new background("orange");
+var greenBackground = new background("green");
+var orangeBackground = new background("orange");
 
-const papaSonia = new nonPlayerCharacter(240, 240, 20, 40, "skyblue");
-const papaSoniaIsCraCra = new nonPlayerCharacter(500, 30, 40, 70, "brown");
+var papaSonia = new nonPlayerCharacter(240, 240, 20, 40, "skyblue");
+var Jona = new nonPlayerCharacter(500, 30, 40, 70, "brown");
 
 var map = [
     [greenBackground, papaSonia, createRock(40, 50, 10, 5, "grey"), createRock(120, 152, 10, 5, "grey")], //C1 R1
     [greenBackground], //C2 R1
-    [greenBackground, papaSoniaIsCraCra], //C3 R1
+    [greenBackground, Jona], //C3 R1
     [orangeBackground], //C4 R1
     [orangeBackground], //C5 R1
     [greenBackground], //C1 R2
