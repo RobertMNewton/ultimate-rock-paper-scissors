@@ -11,154 +11,56 @@ function player(x, y) {
         width: 20,
         height: 40
     };
-    this.collisionBox = {
-        x1: this.position.x,
-        x2: this.position.x + this.dimensions.width,
-        y1: this.position.y + this.dimensions.height - 10,
-        y2: this.position.y + this.dimensions.height
-    };
-    this.isWalking = false;
-    this.direction = "down";
+    this.speed = 2;
 
-    this.talkingTo = null;
-    
-    var dh = 0;
-    var hMax = false;
-    var speed = 2;
-    var delay = 0;
-    
-    this.update = function () {
-        if (this.talkingTo != null) {
-            if (distanceToPlayer(this.talkingTo) >= 50) {
-                this.talkingTo = null;
-            }
-        }
+    let damper = 0.08;
+    let dh = 0;
+    let hMax = false;
 
-        if (this.position.x < 0) {
-            this.position.x = canvas.width - this.dimensions.width;
-
-            coordinate--;
-            background = map[coordinate];     
-        } else if (this.position.x > canvas.width) {
-            this.position.x = 0;
-
-            coordinate++;
-            background = map[coordinate];
-        } else if (this.position.y < -this.dimensions.height) {
-            this.position.y = canvas.height - this.dimensions.height;
-
-            coordinate += 5;
-            background = map[coordinate];
-        } else if (this.position.y > canvas.height) {
-            this.position.y = 0;
-
-            coordinate -= 5;
-            background = map[coordinate];
-        } 
-
+    this.update = function() {
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
-        this.collisionBox = {
-            x1: this.position.x,
-            x2: this.position.x + this.dimensions.width,
-            y1: this.position.y + this.dimensions.height - 10,
-            y2: this.position.y + this.dimensions.height
-        };
-        
-        if(this.talkingTo) {
-            if (this.talkingTo.collision()) {
-                this.position.x -= this.velocity.x;
-                this.position.y -= this.velocity.y;
-
-                this.velocity.x = 0;
-                this.velocity.y = 0;
-            }
-        }
-
-        if (this.isWalking ) {
-            delay = 60;
-
-            if (hMax) {
-                dh -= 0.5;
-                if (dh <= 0) {
-                    hMax = false;
-                }
-            } else {
-                dh += 0.5;
-                if  (dh >= 10) {
-                    hMax = true;
-                }
-            }
+        //Change direction when moving left or right. 
+        if(this.velocity.x != 0) {
+            this.dimensions.width = 15;
         } else {
-            if (delay > 0) {
-                this.velocity.x *= 0.9;
-                this.velocity.y *= 0.9;
-
-                delay--;
-            } else {
-                this.velocity.x = 0;
-                this.velocity.y = 0;
-            }
-
-            if (dh > 0)  {
-                dh -= 0.5;
-            } else {
-                dh = 0;
-            }
-        }
-
-        context.fillStyle = "white";
-        context.fillRect(this.position.x, this.position.y + dh, this.dimensions.width, this.dimensions.height - dh);
-
-    }
-
-    this.setDirection = function(direction) {
-        switch (direction) {
-        case "down":
-        this.dimensions.width = 20;
-        this.dimensions.height = 40;
-
-            this.velocity.x = 0;
-            this.velocity.y = speed;
-
-            this.direction = "down";
-
-            break;
-        case "up":
             this.dimensions.width = 20;
-            this.dimensions.height = 40;
+        }
 
-            this.velocity.x = 0;
-            this.velocity.y = -speed;
-
-            this.direction = "up";
-
-            break;
-        case "left":
-            this.dimensions.width = 15;
-            this.dimensions.height = 40;
-
-            this. velocity.x = -speed;
-            this.velocity.y = 0;
-
-            this.direction = "left"
-
-            break;
-        case "right":
-            this.dimensions.width = 15;
-            this.dimensions.height = 40;
-
-            if (this.direction != "right") {
-                this.position.x += 5;
+        //Bob while moving
+        if(this.velocity.x != 0 || this.velocity.y != 0) {
+            if (hMax) {
+                dh -= 0.2;
+            } else {
+                dh += 0.2
             }
 
-            this.velocity.x = speed;
-            this.velocity.y = 0;
-
-            this.direction = "right";
-
-            break;
+            if (dh >= 5) {
+                hMax = true;
+            } else if (dh <= 0) {
+                hMax = false;
+            }
         }
+
+        //Slow and stop
+        if(Math.abs(this.velocity.x) < damper) {
+            this.velocity.x = 0;
+        } else if(this.velocity.x > 0) {
+            this.velocity.x -= damper;
+        } else if (this.velocity.x < 0) {
+            this.velocity.x += damper;
+        }
+        
+        if(Math.abs(this.velocity.y) < damper) {
+            this.velocity.y = 0;
+        } else if(this.velocity.y > 0) {
+            this.velocity.y -= damper;
+        } else if (this.velocity.y < 0) {
+            this.velocity.y += damper;
+        }
+
+        game.context.fillStyle = "white";
+        game.context.fillRect(this.position.x - this.dimensions.width / 2, this.position.y - this.dimensions.height / 2 + dh, this.dimensions.width, this.dimensions.height - dh);
     }
 }
