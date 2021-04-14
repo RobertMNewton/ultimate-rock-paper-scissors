@@ -18,6 +18,41 @@ function player(x, y) {
     let hMax = false;
 
     this.update = function() {
+        //Change scene if outside bounds and a scene is available in that direction, otherwise don't let player leave scene
+        if(this.position.x < -this.dimensions.width / 2) {
+            if (game.scene.hasLeft) {
+                game.currentScene--;
+                this.position.x = game.canvas.width;
+            } else {
+                this.velocity.x = 0;
+                this.position.x = -this.dimensions.width / 2;
+            }
+        } else if (this.position.x > game.canvas.width + this.dimensions.width / 2) {
+            if(game.scene.hasRight) {
+                game.currentScene++;
+                this.position.x = 0;
+            } else {
+                this.velocity.x = 0;            
+                this.position.x = game.canvas.width + this.dimensions.width / 2;}
+        } else if (this.position.y < -this.dimensions.height / 2) {
+            if (game.scene.hasUp) {
+                game.currentScene += 5;
+                this.position.y = game.canvas.height;
+            } else {
+                this.velocity.y = 0;
+                this.position.y = -this.dimensions.height / 2;
+            }
+        } else if (this.position.y > game.canvas.height + this.dimensions.height / 2) {
+            if (game.scene.hasDown) {
+                game.currentScene -= 5;
+                this.position.y = 0;
+            } else {
+                this.velocity.y = 0;
+                this.position.y = game.canvas.height + this.dimensions.height / 2;
+            }
+        }
+        
+        //Update position
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
